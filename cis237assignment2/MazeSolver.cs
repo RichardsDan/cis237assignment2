@@ -25,7 +25,7 @@ namespace cis237assignment2
         /// Default Constuctor to setup a new maze solver.
         /// </summary>
         public MazeSolver()
-        {}
+        { }
 
 
         /// <summary>
@@ -43,6 +43,12 @@ namespace cis237assignment2
             this.yStart = yStart;
 
             //Do work needed to use mazeTraversal recursive call and solve the maze.
+            PrintMaze();
+            mazeTraversal();
+            PrintMaze();
+
+            Console.WriteLine("Maze Solved.");
+            Console.WriteLine();
         }
 
 
@@ -53,7 +59,87 @@ namespace cis237assignment2
         /// </summary>
         private void mazeTraversal()
         {
+            maze[xStart, yStart] = 'X';
             //Implement maze traversal recursive call
+            while (xStart != 0 && xStart != 11 && yStart != 0 && yStart != 11)
+            {
+                if (maze[xStart, (yStart + 1)] == '.')
+                {
+                    yStart++;
+                }
+                else
+                {
+                    if (maze[(xStart + 1), yStart] == '.')
+                    {
+                        xStart++;
+                    }
+                    else
+                    {
+                        if (maze[xStart, (yStart - 1)] == '.')
+                        {
+                            yStart--;
+                        }
+                        else
+                        {
+                            if (maze[(xStart - 1), yStart] == '.')
+                            {
+                                xStart--;
+                            }
+                            else
+                            {
+                                MazeBack();
+                            }
+                        }
+                    }
+                }
+
+                PrintMaze();
+               Console.ReadLine();
+                mazeTraversal();
+            }
+        }
+
+        private void MazeBack()
+        {
+            maze[xStart, yStart] = '0';
+            if (maze[xStart, (yStart + 1)] == 'X')
+            {
+                yStart++;
+            }
+            else
+            {
+                if (maze[(xStart + 1), yStart] == 'X')
+                {
+                    xStart++;
+                }
+                else
+                {
+                    if (maze[xStart, (yStart - 1)] == 'X')
+                    {
+                        yStart--;
+                    }
+                    else
+                    {
+                        if (maze[(xStart - 1), yStart] == 'X')
+                        {
+                            xStart--;
+                        }
+                    }
+                }
+            }
+        }
+
+        private void PrintMaze()
+        {
+            for (int i=0;i<=11;i++)
+            {
+                for (int j=0;j<=11;j++)
+                {
+                    Console.Write(maze[i, j]);
+                }
+                Console.WriteLine();
+                        }
+            Console.WriteLine();
         }
     }
 }

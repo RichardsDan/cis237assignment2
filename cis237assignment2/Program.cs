@@ -28,7 +28,8 @@ namespace cis237assignment2
             /// You don't have to, but it might make your life easier.
             /// </summary>
             char[,] maze1 = 
-            { { '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#' },
+            { 
+            { '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#' },
             { '#', '.', '.', '.', '#', '.', '.', '.', '.', '.', '.', '#' },
             { '#', '.', '#', '.', '#', '.', '#', '#', '#', '#', '.', '#' },
             { '#', '#', '#', '.', '#', '.', '.', '.', '.', '#', '.', '#' },
@@ -55,7 +56,7 @@ namespace cis237assignment2
             mazeSolver.SolveMaze(maze1, X_START, Y_START);
 
             //Solve the transposed maze.
-            mazeSolver.SolveMaze(maze2, X_START, Y_START);
+     //       mazeSolver.SolveMaze(maze2, X_START, Y_START);
 
         }
 
