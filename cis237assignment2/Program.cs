@@ -80,20 +80,22 @@ namespace cis237assignment2
         {
             char charHolder;
 
+            char[,] maze = new char[mazeToTranspose.GetLength(0), mazeToTranspose.GetLength(1)];
+
             for (int i = 0; i <= 11; i++)
             {
                 for (int j = 0; j <= 11; j++)
                 {
-                    if (i < j)
+                    if (i <= j)
                     {
                         charHolder = mazeToTranspose[i, j];
-                        mazeToTranspose[i, j] = mazeToTranspose[j, i];
-                        mazeToTranspose[j, i] = charHolder;
+                        maze[i, j] = mazeToTranspose[j, i];
+                        maze[j, i] = charHolder;
                     }
                 }
             }
             //Write code here to create a transposed maze.
-            return mazeToTranspose;
+            return maze;
         }
     }
 }
