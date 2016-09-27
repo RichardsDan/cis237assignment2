@@ -17,9 +17,10 @@ namespace cis237assignment2
         /// <summary>
         /// Class level memeber variable for the mazesolver class
         /// </summary>
-        char[,] maze;
+        private char[,] maze;
         int xStart;
         int yStart;
+        bool noSolution = false;
 
         /// <summary>
         /// Default Constuctor to setup a new maze solver.
@@ -45,10 +46,7 @@ namespace cis237assignment2
             //Do work needed to use mazeTraversal recursive call and solve the maze.
             PrintMaze();
             mazeTraversal();
-            PrintMaze();
-
-            Console.WriteLine("Maze Solved.");
-            Console.WriteLine();
+            FinalMessage();
         }
 
 
@@ -61,7 +59,7 @@ namespace cis237assignment2
         {
             maze[xStart, yStart] = 'X';
             //Implement maze traversal recursive call
-            while (xStart != 0 && xStart != 11 && yStart != 0 && yStart != 11)
+            while (xStart != 0 && xStart != 11 && yStart != 0 && yStart != 11 && !noSolution)
             {
                 if (maze[xStart, (yStart + 1)] == '.')
                 {
@@ -124,6 +122,10 @@ namespace cis237assignment2
                         {
                             xStart--;
                         }
+                        else
+                        {
+                            noSolution = true;
+                        }
                     }
                 }
             }
@@ -139,6 +141,17 @@ namespace cis237assignment2
                 }
                 Console.WriteLine();
                         }
+            Console.WriteLine();
+        }
+
+        private void FinalMessage()
+        {
+            PrintMaze();
+
+            if (noSolution)
+                Console.WriteLine("Maze has no solution.");
+            else
+                Console.WriteLine("Maze Solved.");
             Console.WriteLine();
         }
     }
