@@ -82,12 +82,17 @@ namespace cis237assignment2
         /// <returns>transposedMaze</returns>
         static char[,] transposeMaze(char[,] mazeToTranspose)
         {
+            // Creates new char array using lengths of maze1
             char[,] maze = new char[mazeToTranspose.GetLength(0), mazeToTranspose.GetLength(1)];
 
+            // Loops through horizontal rows of array
             for (int i = 0; i <= 11; i++)
             {
+                // Loops through vertical columns on array
                 for (int j = 0; j <= 11; j++)
                 {
+                    // Build second maze and transposes at the same time by replacing each 
+                    // spot in maze with the opposite spot in mazeToTranspose
                     maze[i, j] = mazeToTranspose[j, i];
                 }
             }
