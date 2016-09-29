@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Daniel Richards
+// CIS 237
+// 9/29/2016
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,7 +23,7 @@ namespace cis237assignment2
         private char[,] maze;
         int xStart;
         int yStart;
-        bool noSolution = false;
+        bool mazeSolved;
 
         /// <summary>
         /// Default Constuctor to setup a new maze solver.
@@ -43,10 +46,16 @@ namespace cis237assignment2
             this.xStart = xStart;
             this.yStart = yStart;
 
-            //Do work needed to use mazeTraversal recursive call and solve the maze.
+            // Tell the program the maze is not yet completed
+            mazeSolved = false;
+
+            // Print base maze and begin recursive call to solve maze
             PrintMaze();
-            mazeTraversal();
-            FinalMessage();
+            mazeTraversal(xStart, yStart);
+
+            // Message signifying the maze is solved
+            Console.WriteLine("Maze Solved." +
+                Environment.NewLine);
         }
 
 
@@ -55,103 +64,70 @@ namespace cis237assignment2
         /// Feel free to change the return type if you like, or pass in parameters that you might need.
         /// This is only a very small starting point.
         /// </summary>
-        private void mazeTraversal()
+        private void mazeTraversal(int xSpot, int ySpot)
         {
-            maze[xStart, yStart] = 'X';
-            //Implement maze traversal recursive call
-            while (xStart != 0 && xStart != 11 && yStart != 0 && yStart != 11 && !noSolution)
+            // Mark the current location in the maze and print maze again, showing the new location
+            maze[xSpot, ySpot] = 'X';
+            PrintMaze();
+            // Check if program has reached the edge of the maze
+            if (xSpot != 0 && xSpot != 11 && ySpot != 0 && ySpot != 11 && !mazeSolved)
             {
-                if (maze[xStart, (yStart + 1)] == '.')
+                // Check to see if maze can move right then call mazeTraversal, indicating to go right
+                if (maze[xSpot, (ySpot + 1)] == '.')
                 {
-                    yStart++;
+                    mazeTraversal(xSpot, ySpot + 1);
                 }
-                else
+                // Check to see if maze can move down then call mazeTraversal, indicating to go down
+                if (maze[(xSpot + 1), ySpot] == '.' && !mazeSolved)
                 {
-                    if (maze[(xStart + 1), yStart] == '.')
-                    {
-                        xStart++;
-                    }
-                    else
-                    {
-                        if (maze[xStart, (yStart - 1)] == '.')
-                        {
-                            yStart--;
-                        }
-                        else
-                        {
-                            if (maze[(xStart - 1), yStart] == '.')
-                            {
-                                xStart--;
-                            }
-                            else
-                            {
-                                MazeBack();
-                            }
-                        }
-                    }
+                    mazeTraversal(xSpot + 1, ySpot);
                 }
-
-                PrintMaze();
-               Console.ReadLine();
-                mazeTraversal();
-            }
-        }
-
-        private void MazeBack()
-        {
-            maze[xStart, yStart] = '0';
-            if (maze[xStart, (yStart + 1)] == 'X')
-            {
-                yStart++;
+                // Check to see if maze can move left then call mazeTraversal, indicating to go left
+                if (maze[xSpot, (ySpot - 1)] == '.' && !mazeSolved)
+                {
+                    mazeTraversal(xSpot, ySpot - 1);
+                }
+                // Check to see if maze can move up then call mazeTraversal, indicating to go up
+                if (maze[(xSpot - 1), ySpot] == '.' && !mazeSolved)
+                {
+                    mazeTraversal(xSpot - 1, ySpot);
+                }
+                // If maze is not solved and there is no open space for the maze to move to (i.e. dead end), 
+                // replace the current spot in the maze with a 0. This does not happen when the maze has been solved,
+                // so that the correct path through the maze is not replaced with 0s
+                if (!mazeSolved)
+                    MazeBack(xSpot, ySpot);
             }
             else
             {
-                if (maze[(xStart + 1), yStart] == 'X')
-                {
-                    xStart++;
-                }
-                else
-                {
-                    if (maze[xStart, (yStart - 1)] == 'X')
-                    {
-                        yStart--;
-                    }
-                    else
-                    {
-                        if (maze[(xStart - 1), yStart] == 'X')
-                        {
-                            xStart--;
-                        }
-                        else
-                        {
-                            noSolution = true;
-                        }
-                    }
-                }
+                // If program has reached the edge of the array, it has solved the maze
+                mazeSolved = true;
             }
         }
 
+        /// <summary>
+        /// Replaces the current spot in the maze with a 0, indicating a dead end path
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        private void MazeBack(int x, int y)
+        {
+            maze[x, y] = '0';
+            // Print maze again, showing the backtrack to the current path
+            PrintMaze();
+        }
+
+        // Prints maze to screen
         private void PrintMaze()
         {
-            for (int i=0;i<=11;i++)
+            for (int i = 0; i <= 11; i++)
             {
-                for (int j=0;j<=11;j++)
+                for (int j = 0; j <= 11; j++)
                 {
                     Console.Write(maze[i, j]);
                 }
                 Console.WriteLine();
-                        }
-            Console.WriteLine();
-        }
-
-        private void FinalMessage()
-        {
-            PrintMaze();
-
-            if (noSolution)
-                Console.WriteLine("Maze has no solution.");
-            else
-                Console.WriteLine("Maze Solved.");
+            }
             Console.WriteLine();
         }
     }

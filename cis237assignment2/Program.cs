@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Daniel Richards
+// CIS 237
+// 9/29/2016
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,8 +30,8 @@ namespace cis237assignment2
             /// Note: You may want to make a smaller version to test and debug with.
             /// You don't have to, but it might make your life easier.
             /// </summary>
-            char[,] maze1 = 
-            { 
+            char[,] maze1 =
+            {
             { '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#' },
             { '#', '.', '.', '.', '#', '.', '.', '.', '.', '.', '.', '#' },
             { '#', '.', '#', '.', '#', '.', '#', '#', '#', '#', '.', '#' },
@@ -55,6 +58,7 @@ namespace cis237assignment2
             /// </summary>
             mazeSolver.SolveMaze(maze1, X_START, Y_START);
 
+            Console.ReadLine();
             //Solve the transposed maze.
             mazeSolver.SolveMaze(maze2, X_START, Y_START);
 
@@ -78,20 +82,13 @@ namespace cis237assignment2
         /// <returns>transposedMaze</returns>
         static char[,] transposeMaze(char[,] mazeToTranspose)
         {
-            char charHolder;
-
             char[,] maze = new char[mazeToTranspose.GetLength(0), mazeToTranspose.GetLength(1)];
 
             for (int i = 0; i <= 11; i++)
             {
                 for (int j = 0; j <= 11; j++)
                 {
-                    if (i <= j)
-                    {
-                        charHolder = mazeToTranspose[i, j];
-                        maze[i, j] = mazeToTranspose[j, i];
-                        maze[j, i] = charHolder;
-                    }
+                    maze[i, j] = mazeToTranspose[j, i];
                 }
             }
             //Write code here to create a transposed maze.
